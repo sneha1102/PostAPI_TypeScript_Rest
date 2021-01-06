@@ -31,32 +31,57 @@ const comment_1 = __importDefault(require("../model/comment"));
 let PostClassController = class PostClassController {
     //to add new post  "/posts"
     addNewPost(post) {
-        return post_1.default.create(post);
+        try {
+            return post_1.default.create(post);
+        }
+        catch (err) {
+            return err;
+        }
     }
     //to update a post
     updatePost(postId, post) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield post_1.default.findByIdAndUpdate(postId, post, { new: true });
-            return result;
+            try {
+                const result = yield post_1.default.findByIdAndUpdate(postId, post, { new: true });
+                return result;
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
     //to delete a post
     deletePost(postId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield post_1.default.findByIdAndDelete(postId);
-            return result;
+            try {
+                const result = yield post_1.default.findByIdAndDelete(postId);
+                return result;
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
     //to get post by id "/posts/:id"
     getPostById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield post_1.default.findById(id).exec();
+            try {
+                return yield post_1.default.findById(id).exec();
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
     //to get all post "/posts"
     getAllPost() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield post_1.default.find({}).exec();
+            try {
+                return yield post_1.default.find({}).exec();
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
     //to like a post  "/posts/:postId/likes"
@@ -88,17 +113,27 @@ let PostClassController = class PostClassController {
     //to add a comment to a post
     addNewComment(postId, comment) {
         return __awaiter(this, void 0, void 0, function* () {
-            comment.postId = postId;
-            return comment_1.default.create(comment);
+            try {
+                comment.postId = postId;
+                return comment_1.default.create(comment);
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
     //to get all comments of particular post
     getCommentByPostId(postId) {
         return __awaiter(this, void 0, void 0, function* () {
-            let res = yield comment_1.default.find({ postId: postId })
-                .populate("commentedBy")
-                .populate("postId");
-            return res;
+            try {
+                let res = yield comment_1.default.find({ postId: postId })
+                    .populate("commentedBy")
+                    .populate("postId");
+                return res;
+            }
+            catch (err) {
+                return err;
+            }
         });
     }
 };
