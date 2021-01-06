@@ -17,8 +17,10 @@ mongoose
 
 let app: express.Application = express();
 
+//register services
 Server.buildServices(app, ...apiCallService);
 
+//listening to port 3000
 app.listen(3000, function () {
   console.log("listening on port 3000!");
 });
