@@ -4,7 +4,7 @@ import { ObjectId } from "mongoose";
 import Comment, { CommentModel } from "../model/comment";
 @Path("/posts")
 export class PostClassController {
-  //to add new post  "/posts"
+  //to add new post   "/posts"
   @POST
   public addNewPost(post: PostModel): Promise<PostModel> {
     try {
