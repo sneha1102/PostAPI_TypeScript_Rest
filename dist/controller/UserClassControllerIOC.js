@@ -21,11 +21,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserClassController = void 0;
+exports.UserClassControllerIOC = void 0;
 const typescript_rest_1 = require("typescript-rest");
-const UserService_1 = require("../services/UserService");
+const UserServiceIOC_1 = require("../services/UserServiceIOC");
 const typescript_ioc_1 = require("typescript-ioc");
-let UserClassController = class UserClassController {
+let UserClassControllerIOC = class UserClassControllerIOC {
     //to add new user "/users"
     addNewUser(user) {
         return this.injectedService.addNewUser(user);
@@ -57,14 +57,14 @@ let UserClassController = class UserClassController {
 };
 __decorate([
     typescript_ioc_1.Inject,
-    __metadata("design:type", UserService_1.UserService)
-], UserClassController.prototype, "injectedService", void 0);
+    __metadata("design:type", UserServiceIOC_1.UserService)
+], UserClassControllerIOC.prototype, "injectedService", void 0);
 __decorate([
     typescript_rest_1.POST,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], UserClassController.prototype, "addNewUser", null);
+], UserClassControllerIOC.prototype, "addNewUser", null);
 __decorate([
     typescript_rest_1.GET,
     typescript_rest_1.Path(":id"),
@@ -72,13 +72,13 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], UserClassController.prototype, "getUserById", null);
+], UserClassControllerIOC.prototype, "getUserById", null);
 __decorate([
     typescript_rest_1.GET,
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserClassController.prototype, "getAllUser", null);
+], UserClassControllerIOC.prototype, "getAllUser", null);
 __decorate([
     typescript_rest_1.POST,
     typescript_rest_1.Path(":senderId"),
@@ -86,7 +86,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], UserClassController.prototype, "sendMessage", null);
+], UserClassControllerIOC.prototype, "sendMessage", null);
 __decorate([
     typescript_rest_1.GET,
     typescript_rest_1.Path(":userId/messages"),
@@ -94,8 +94,8 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], UserClassController.prototype, "getAllMessageByTime", null);
-UserClassController = __decorate([
+], UserClassControllerIOC.prototype, "getAllMessageByTime", null);
+UserClassControllerIOC = __decorate([
     typescript_rest_1.Path("/users")
-], UserClassController);
-exports.UserClassController = UserClassController;
+], UserClassControllerIOC);
+exports.UserClassControllerIOC = UserClassControllerIOC;

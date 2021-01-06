@@ -8,6 +8,7 @@ import { PostService } from "../services/PostService";
 
 @Path("/posts")
 export class PostClassController {
+  //using property injection
   @Inject
   private injectedService: PostService;
 

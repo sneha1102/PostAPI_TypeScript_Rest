@@ -1,4 +1,4 @@
-import { Provides } from "typescript-ioc";
+import { Container } from "typescript-ioc";
 import mongoose from "mongoose";
 
 import User, { UserModel } from "../model/user";
@@ -19,7 +19,6 @@ export abstract class UserService {
 
 //implementation of interface
 
-@Provides(UserService)
 export class UserServiceImpl implements UserService {
   //to add a new user
   public addNewUser(user: UserModel): Promise<UserModel> {
@@ -128,3 +127,4 @@ export class UserServiceImpl implements UserService {
     }
   }
 }
+Container.bind(UserService).to(UserServiceImpl);

@@ -2,12 +2,11 @@ import { GET, Path, PathParam, POST } from "typescript-rest";
 
 import { UserModel } from "../model/user";
 import { MessageModel } from "../model/message";
-import { UserService } from "../services/UserService";
+import { UserService } from "../services/UserServiceIOC";
 import { Inject } from "typescript-ioc";
 
 @Path("/users")
-export class UserClassController {
-  //using property injection
+export class UserClassControllerIOC {
   @Inject
   private injectedService: UserService;
 

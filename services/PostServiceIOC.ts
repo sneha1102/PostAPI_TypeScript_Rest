@@ -1,8 +1,8 @@
 import { ObjectId } from "mongoose";
-import { Provides } from "typescript-ioc";
 
 import Post, { PostModel } from "../model/post";
 import Comment, { CommentModel } from "../model/comment";
+import { Container } from "typescript-ioc";
 
 export abstract class PostService {
   public abstract addNewPost(user: PostModel): Promise<PostModel>;
@@ -25,7 +25,6 @@ export abstract class PostService {
 
 //implementation of interface
 
-@Provides(PostService)
 export class PostServiceImpl implements PostService {
   //to add new post
 
@@ -137,3 +136,4 @@ export class PostServiceImpl implements PostService {
     }
   }
 }
+Container.bind(PostService).to(PostServiceImpl);

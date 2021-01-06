@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const typescript_rest_1 = require("typescript-rest");
 const mongoose_1 = __importDefault(require("mongoose"));
-const index_1 = __importDefault(require("./controller/index"));
+//import apiCallService from "./controller/index";
+const indexIOC_1 = __importDefault(require("./controller/indexIOC"));
 //mongoose connection
 const mongooseConnection = () => {
     mongoose_1.default
@@ -21,7 +22,7 @@ const mongooseConnection = () => {
 };
 let app = express_1.default();
 //register services
-typescript_rest_1.Server.buildServices(app, ...index_1.default);
+typescript_rest_1.Server.buildServices(app, ...indexIOC_1.default);
 //listening to port 3000
 app.listen(3000, () => {
     console.log("listening on port 3000!");
