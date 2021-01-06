@@ -18,7 +18,9 @@ mongoose_1.default
     .then(() => console.log("Connected To mongodb"))
     .catch((err) => console.log(err));
 let app = express_1.default();
+//register services
 typescript_rest_1.Server.buildServices(app, ...apiCall_1.default);
+//listening to port 3000
 app.listen(3000, function () {
     console.log("listening on port 3000!");
 });
