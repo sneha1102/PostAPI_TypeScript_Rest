@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
-import { DELETE, GET, Path, PathParam, POST } from "typescript-rest";
+
 import User, { UserModel } from "../model/user";
 import Message, { MessageModel } from "../model/message";
-import { ObjectId } from "mongoose";
-@Path("/users")
-export class UserClassController {
-  //to add new user "/users"
-  @POST
+
+export class UserService {
+  //to add a new user
+
   public addNewUser(user: UserModel): Promise<UserModel> {
     try {
       return User.create(user);
@@ -15,10 +14,9 @@ export class UserClassController {
     }
   }
 
-  //to get user by id "/users/:id"
-  @GET
-  @Path(":id")
-  public async getUserById(@PathParam("id") id: string): Promise<UserModel> {
+  //to get user by id
+
+  public async getUserById(id: string): Promise<UserModel> {
     try {
       return await User.findById(id).exec();
     } catch (err) {
@@ -26,8 +24,8 @@ export class UserClassController {
     }
   }
 
-  //to get all users "/users"
-  @GET
+  //to get all users
+
   public async getAllUser(): Promise<Array<UserModel>> {
     try {
       return await User.find({}).exec();
@@ -36,11 +34,10 @@ export class UserClassController {
     }
   }
 
-  //to send message "/users/:senderId/messages"
-  @POST
-  @Path(":senderId")
+  //to send message
+
   public async sendMessage(
-    @PathParam("senderId") senderId: ObjectId,
+    senderId: string,
     message: MessageModel
   ): Promise<MessageModel> {
     try {
@@ -52,11 +49,10 @@ export class UserClassController {
     }
   }
 
-  //to get all messages by time "/users/:userId/messages"
-  @GET
-  @Path(":userId/messages")
+  //to get all message by time
+
   public async getAllMessageByTime(
-    @PathParam("userId") userId: string
+    userId: string
   ): Promise<Array<MessageModel>> {
     try {
       const result = await Message.aggregate([
