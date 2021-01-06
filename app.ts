@@ -1,18 +1,23 @@
-import * as express from "express";
-import { Server, Path, GET, PathParam } from "typescript-rest";
+import express from "express";
+import { Server, Path, GET, PathParam, POST } from "typescript-rest";
+import mongoose from "mongoose";
+import apiCallService from "./controller/apiCall";
 
-@Path("/hello")
-class HelloService {
-  @Path(":name")
-  @GET
-  sayHello(@PathParam("name") name: string): string {
-    return "Hello " + name;
-  }
-}
+//mongoose connection
+
+mongoose
+  .connect("mongodb://localhost/PostTypeRest", {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+  .then(() => console.log("Connected To mongodb"))
+  .catch((err) => console.log(err));
 
 let app: express.Application = express();
 
-Server.buildServices(app);
+Server.buildServices(app, ...apiCallService);
 
 app.listen(3000, function () {
   console.log("listening on port 3000!");

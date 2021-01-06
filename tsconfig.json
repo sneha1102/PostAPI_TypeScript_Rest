@@ -1,9 +1,16 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
+    "declaration": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "module": "commonjs",
     "target": "es6",
-    "allowJs": true
-  }
+    "allowJs": true,
+    "outDir": "dist"
+  },
+  "include": ["app.ts"]
 }
