@@ -21,6 +21,7 @@ export class ExcelFileServiceImpl implements ExcelFileService {
       header: {
         rows: 1,
       },
+
       columnToKey: {
         "*": "{{columnHeader}}",
       },
@@ -28,7 +29,7 @@ export class ExcelFileServiceImpl implements ExcelFileService {
 
     //store excel data in mongodb
 
-    return ExcelData.create({ excelData: result });
+    return ExcelData.create(result.Sheet1);
   }
 }
 Container.bind(ExcelFileService).to(ExcelFileServiceImpl);

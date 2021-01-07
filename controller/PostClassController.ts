@@ -1,4 +1,12 @@
-import { GET, POST, DELETE, PATCH, PathParam, Path } from "typescript-rest";
+import {
+  GET,
+  POST,
+  DELETE,
+  PATCH,
+  PathParam,
+  Path,
+  FileParam,
+} from "typescript-rest";
 import { ObjectId } from "mongoose";
 import { Inject } from "typescript-ioc";
 
@@ -12,7 +20,10 @@ export class PostClassController {
 
   //to add new post   "/posts"
   @POST
-  public addNewPost(post: PostModel): Promise<PostModel> {
+  public addNewPost(
+    post: PostModel
+    //@FileParam("file") file: Express.Multer.File
+  ): Promise<PostModel> {
     return this.injectedService.addNewPost(post);
   }
 

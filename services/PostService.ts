@@ -5,7 +5,10 @@ import { Container } from "typescript-ioc";
 import { Post, Comment, PostModel, CommentModel } from "../model/index";
 
 export abstract class PostService {
-  public abstract addNewPost(user: PostModel): Promise<PostModel>;
+  public abstract addNewPost(
+    user: PostModel
+  ): //file: Express.Multer.File
+  Promise<PostModel>;
   public abstract updatePost(
     postId: string,
     post: PostModel
@@ -28,8 +31,12 @@ export abstract class PostService {
 export class PostServiceImpl implements PostService {
   //to add new post
 
-  public addNewPost(post: PostModel): Promise<PostModel> {
+  public addNewPost(
+    post: PostModel
+    // file: Express.Multer.File
+  ): Promise<PostModel> {
     try {
+      // console.log(file);
       return Post.create(post);
     } catch (err) {
       return err;
