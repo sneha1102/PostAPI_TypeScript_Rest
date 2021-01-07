@@ -1,8 +1,8 @@
 import express from "express";
 import { Server } from "typescript-rest";
 import mongoose from "mongoose";
-//import apiCallService from "./controller/index";
-import apiCallService from "./controller/indexIOC";
+
+import apiCallService from "./controller/index";
 
 //mongoose connection
 

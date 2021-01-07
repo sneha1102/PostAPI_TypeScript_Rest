@@ -1,9 +1,31 @@
 import { ObjectId } from "mongoose";
 
-import Post, { PostModel } from "../model/post";
-import Comment, { CommentModel } from "../model/comment";
+import { Container } from "typescript-ioc";
 
-export class PostService {
+import { Post, Comment, PostModel, CommentModel } from "../model/index";
+
+export abstract class PostService {
+  public abstract addNewPost(user: PostModel): Promise<PostModel>;
+  public abstract updatePost(
+    postId: string,
+    post: PostModel
+  ): Promise<PostModel>;
+  public abstract deletePost(postId: string): Promise<PostModel>;
+  public abstract getPostById(id: string): Promise<PostModel>;
+  public abstract getAllPost(): Promise<Array<PostModel>>;
+  public abstract likePost(postId: string, post: PostModel): Promise<PostModel>;
+  public abstract addNewComment(
+    postId: ObjectId,
+    comment: CommentModel
+  ): Promise<CommentModel>;
+  public abstract getCommentByPostId(
+    postId: ObjectId
+  ): Promise<Array<CommentModel>>;
+}
+
+//implementation of interface
+
+export class PostServiceImpl implements PostService {
   //to add new post
 
   public addNewPost(post: PostModel): Promise<PostModel> {
@@ -114,3 +136,4 @@ export class PostService {
     }
   }
 }
+Container.bind(PostService).to(PostServiceImpl);

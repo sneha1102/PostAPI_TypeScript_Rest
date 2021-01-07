@@ -1,11 +1,25 @@
+import { Container } from "typescript-ioc";
 import mongoose from "mongoose";
 
-import User, { UserModel } from "../model/user";
-import Message, { MessageModel } from "../model/message";
+import { User, UserModel, Message, MessageModel } from "../model/index";
 
-export class UserService {
+export abstract class UserService {
+  public abstract addNewUser(user: UserModel): Promise<UserModel>;
+  public abstract getUserById(id: string): Promise<UserModel>;
+  public abstract getAllUser(): Promise<Array<UserModel>>;
+  public abstract sendMessage(
+    senderId: string,
+    message: MessageModel
+  ): Promise<MessageModel>;
+  public abstract getAllMessageByTime(
+    userId: string
+  ): Promise<Array<MessageModel>>;
+}
+
+//implementation of interface
+
+export class UserServiceImpl implements UserService {
   //to add a new user
-
   public addNewUser(user: UserModel): Promise<UserModel> {
     try {
       return User.create(user);
@@ -15,7 +29,6 @@ export class UserService {
   }
 
   //to get user by id
-
   public async getUserById(id: string): Promise<UserModel> {
     try {
       return await User.findById(id).exec();
@@ -113,3 +126,4 @@ export class UserService {
     }
   }
 }
+Container.bind(UserService).to(UserServiceImpl);
