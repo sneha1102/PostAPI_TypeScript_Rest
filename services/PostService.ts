@@ -1,5 +1,4 @@
 import { ObjectId } from "mongoose";
-
 import { Container } from "typescript-ioc";
 
 import { Post, Comment, PostModel, CommentModel } from "../model/index";

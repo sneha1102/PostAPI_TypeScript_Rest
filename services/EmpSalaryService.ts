@@ -1,11 +1,11 @@
 import Joi from "joi";
 import { Container } from "typescript-ioc";
-import ExcelToJson from "../helperFunction/ExcelToJSON";
+import { helperFunctionClass } from "../helperFunction/helperFunctionClass";
 
 import { EmpSalary, EmpSalaryModel } from "../model/index";
 import {
-  fileExtensionValidator,
-  fileContentValidator,
+  fileExtensionValidatorClass,
+  fileContentValidatorClass,
 } from "../validator/index";
 
 export abstract class EmpSalaryService {
@@ -22,11 +22,13 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
   ): Promise<Array<EmpSalaryModel>> {
     try {
       //check for excel file extension
-      if (fileExtensionValidator(file)) {
+      if (fileExtensionValidatorClass.fileExtensionValidator(file)) {
         //conversion of emp salary data to json
-        const result: Array<EmpSalaryModel> = ExcelToJson(file);
+        const result: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
+          file
+        );
         //file content/type validator
-        let services: Joi.ArraySchema = fileContentValidator();
+        let services: Joi.ArraySchema = fileContentValidatorClass.fileContentValidator();
         let test: Joi.ValidationResult = services.validate(result);
         if (test.error) {
           console.log("file content validation error");

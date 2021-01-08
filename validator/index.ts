@@ -1,4 +1,4 @@
-import { fileExtensionValidator } from "./fileExtensionValidator";
-import { fileContentValidator } from "./fileContentValidator";
+import { fileExtensionValidatorClass } from "./fileExtensionValidator";
+import { fileContentValidatorClass } from "./fileContentValidator";
 
-export { fileExtensionValidator, fileContentValidator };
+export { fileExtensionValidatorClass, fileContentValidatorClass };

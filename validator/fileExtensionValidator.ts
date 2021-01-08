@@ -1,7 +1,11 @@
-//function to check file extension for excel file
-export function fileExtensionValidator(file: Express.Multer.File): boolean {
-  if (file.originalname.split(".")[1] === "xlsx") {
-    return true;
+import { fileContentValidatorClass } from ".";
+
+export class fileExtensionValidatorClass {
+  //function to check file extension for excel file
+  public static fileExtensionValidator(file: Express.Multer.File): boolean {
+    if (file.originalname.split(".")[1] === "xlsx") {
+      return true;
+    }
+    return false;
   }
-  return false;
 }
