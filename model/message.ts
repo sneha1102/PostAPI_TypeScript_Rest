@@ -8,7 +8,7 @@ export interface MessageModel extends Document {
   receiverId: UserModel["_id"];
 }
 
-const messageSchema = new Schema(
+const messageSchema: Schema = new Schema(
   {
     senderId: { type: Schema.Types.ObjectId, index: true },
     message: String,

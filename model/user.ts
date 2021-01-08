@@ -4,7 +4,7 @@ export interface UserModel extends Document {
   name: string;
 }
 
-const userSchema = new Schema({
+const userSchema: Schema = new Schema({
   name: { type: String, unique: true },
 });
 

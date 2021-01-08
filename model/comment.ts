@@ -6,7 +6,7 @@ export interface CommentModel extends Document {
   commentedBy: Schema.Types.ObjectId;
 }
 
-const commentSchema = new Schema(
+const commentSchema: Schema = new Schema(
   {
     postId: { type: Schema.Types.ObjectId, ref: "Post" },
     comment: String,

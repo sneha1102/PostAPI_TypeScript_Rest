@@ -15,7 +15,7 @@ export interface PostModel extends Document {
   ];
 }
 
-const postSchema = new Schema(
+const postSchema: Schema = new Schema(
   {
     postName: String,
     description: String,

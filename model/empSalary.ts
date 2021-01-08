@@ -6,7 +6,7 @@ export interface EmpSalaryModel extends Document {
   Salary: Number;
 }
 
-const empSalarySchema = new Schema(
+const empSalarySchema: Schema = new Schema(
   {
     Name: String,
     EmpId: {
