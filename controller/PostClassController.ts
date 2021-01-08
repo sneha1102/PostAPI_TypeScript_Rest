@@ -1,12 +1,4 @@
-import {
-  GET,
-  POST,
-  DELETE,
-  PATCH,
-  PathParam,
-  Path,
-  FileParam,
-} from "typescript-rest";
+import { GET, POST, DELETE, PATCH, PathParam, Path } from "typescript-rest";
 import { ObjectId } from "mongoose";
 import { Inject } from "typescript-ioc";
 

@@ -17,7 +17,6 @@ export abstract class UserService {
 }
 
 //implementation of interface
-
 export class UserServiceImpl implements UserService {
   //to add a new user
   public addNewUser(user: UserModel): Promise<UserModel> {
@@ -38,7 +37,6 @@ export class UserServiceImpl implements UserService {
   }
 
   //to get all users
-
   public async getAllUser(): Promise<Array<UserModel>> {
     try {
       return await User.find({}).exec();
@@ -48,7 +46,6 @@ export class UserServiceImpl implements UserService {
   }
 
   //to send message
-
   public async sendMessage(
     senderId: string,
     message: MessageModel
@@ -63,7 +60,6 @@ export class UserServiceImpl implements UserService {
   }
 
   //to get all message by time
-
   public async getAllMessageByTime(
     userId: string
   ): Promise<Array<MessageModel>> {

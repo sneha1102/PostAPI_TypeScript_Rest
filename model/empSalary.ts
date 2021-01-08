@@ -12,8 +12,8 @@ const empSalarySchema = new Schema(
     EmpId: {
       type: Number,
       required: true,
-      //unique: true,
-      //index: true,
+      unique: true,
+      index: true,
     },
     Salary: {
       type: Number,

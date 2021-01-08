@@ -5,10 +5,7 @@ import { Container } from "typescript-ioc";
 import { Post, Comment, PostModel, CommentModel } from "../model/index";
 
 export abstract class PostService {
-  public abstract addNewPost(
-    user: PostModel
-  ): //file: Express.Multer.File
-  Promise<PostModel>;
+  public abstract addNewPost(user: PostModel): Promise<PostModel>;
   public abstract updatePost(
     postId: string,
     post: PostModel
@@ -27,10 +24,8 @@ export abstract class PostService {
 }
 
 //implementation of interface
-
 export class PostServiceImpl implements PostService {
   //to add new post
-
   public addNewPost(
     post: PostModel
     // file: Express.Multer.File
@@ -44,7 +39,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to update a post
-
   public async updatePost(postId: string, post: PostModel): Promise<PostModel> {
     try {
       const result = await Post.findByIdAndUpdate(postId, post, { new: true });
@@ -65,7 +59,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to get post by id
-
   public async getPostById(id: string): Promise<PostModel> {
     try {
       return await Post.findById(id);
@@ -75,7 +68,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to get all post
-
   public async getAllPost(): Promise<Array<PostModel>> {
     try {
       return await Post.find({});
@@ -85,7 +77,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to like a post
-
   public async likePost(postId: string, post: PostModel): Promise<PostModel> {
     try {
       let result: PostModel;
@@ -115,7 +106,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to add a comment to a post
-
   public async addNewComment(
     postId: ObjectId,
     comment: CommentModel
@@ -129,7 +119,6 @@ export class PostServiceImpl implements PostService {
   }
 
   //to get all comment of particular post
-
   public async getCommentByPostId(
     postId: ObjectId
   ): Promise<Array<CommentModel>> {
