@@ -12,15 +12,11 @@ export class PostClassController {
 
   //to add new post   "/posts"
   @POST
-  public addNewPost(
-    post: PostModel
-    //@FileParam("file") file: Express.Multer.File
-  ): Promise<PostModel> {
+  public addNewPost(post: PostModel): Promise<PostModel> {
     return this.injectedService.addNewPost(post);
   }
 
   //to update a post
-
   @PATCH
   @Path("/:postId")
   public async updatePost(
@@ -31,7 +27,6 @@ export class PostClassController {
   }
 
   //to delete a post
-
   @DELETE
   @Path("/:postId")
   public async deletePost(
@@ -41,7 +36,6 @@ export class PostClassController {
   }
 
   //to get post by id "/posts/:id"
-
   @GET
   @Path(":id")
   public async getPostById(@PathParam("id") id: string): Promise<PostModel> {
@@ -49,14 +43,12 @@ export class PostClassController {
   }
 
   //to get all post "/posts"
-
   @GET
   public async getAllPost(): Promise<Array<PostModel>> {
     return this.injectedService.getAllPost();
   }
 
   //to like a post  "/posts/:postId/likes"
-
   @POST
   @Path(":postId/likes")
   public async likePost(
@@ -67,7 +59,6 @@ export class PostClassController {
   }
 
   //to add a comment to a post
-
   @POST
   @Path("/:postId/comments")
   public async addNewComment(
@@ -78,7 +69,6 @@ export class PostClassController {
   }
 
   //to get all comments of particular post
-
   @GET
   @Path("/:postId/comments")
   public async getCommentByPostId(

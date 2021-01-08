@@ -6,9 +6,9 @@ import { FileParam, Path, POST } from "typescript-rest";
 
 @Path("/excelData")
 export class EmpSalaryController {
-  //inject
   @Inject
   private injectedService: EmpSalaryService;
+
   // add new excel sheet data in mongodb
   @POST
   public addNewExcelSheet(

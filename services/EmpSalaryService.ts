@@ -27,6 +27,7 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
         const result: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
           file
         );
+
         //file content/type validator
         let services: Joi.ArraySchema = fileContentValidatorClass.fileContentValidator();
         let test: Joi.ValidationResult = services.validate(result);
@@ -34,7 +35,7 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
           console.log("file content validation error");
           throw new Error();
         }
-        // console.log(test.value);
+
         //store emp salary data from excel sheet to mongodb
         return EmpSalary.create(result);
       }

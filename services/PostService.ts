@@ -25,12 +25,8 @@ export abstract class PostService {
 //implementation of interface
 export class PostServiceImpl implements PostService {
   //to add new post
-  public addNewPost(
-    post: PostModel
-    // file: Express.Multer.File
-  ): Promise<PostModel> {
+  public addNewPost(post: PostModel): Promise<PostModel> {
     try {
-      // console.log(file);
       return Post.create(post);
     } catch (err) {
       return err;

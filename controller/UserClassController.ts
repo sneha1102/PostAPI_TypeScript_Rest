@@ -10,14 +10,12 @@ export class UserClassController {
   private injectedService: UserService;
 
   //to add new user "/users"
-
   @POST
   public addNewUser(user: UserModel): Promise<UserModel> {
     return this.injectedService.addNewUser(user);
   }
 
   //to get user by id "/users/:id"
-
   @GET
   @Path(":id")
   public async getUserById(@PathParam("id") id: string): Promise<UserModel> {
@@ -25,14 +23,12 @@ export class UserClassController {
   }
 
   //to get all users "/users"
-
   @GET
   public async getAllUser(): Promise<Array<UserModel>> {
     return this.injectedService.getAllUser();
   }
 
   //to send message "/users/:senderId/messages"
-
   @POST
   @Path(":senderId")
   public async sendMessage(
@@ -43,7 +39,6 @@ export class UserClassController {
   }
 
   //to get all messages by time "/users/:userId/messages"
-
   @GET
   @Path(":userId/messages")
   public async getAllMessageByTime(
