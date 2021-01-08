@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Document } from "mongoose";
+import { Document, Schema, model } from "mongoose";
+
 import { UserModel } from "./user";
 
 export interface PostModel extends Document {
@@ -15,16 +15,16 @@ export interface PostModel extends Document {
   ];
 }
 
-const postSchema = new mongoose.Schema(
+const postSchema = new Schema(
   {
     postName: String,
     description: String,
     image: String,
-    postedBy: { type: mongoose.Schema.Types.ObjectId },
+    postedBy: { type: Schema.Types.ObjectId },
     likes: Number,
     likeDetails: [
       {
-        likedBy: { type: mongoose.Schema.Types.ObjectId },
+        likedBy: { type: Schema.Types.ObjectId },
       },
     ],
   },
@@ -33,4 +33,4 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model<PostModel>("Post", postSchema);
+export default model<PostModel>("Post", postSchema);

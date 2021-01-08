@@ -1,5 +1,5 @@
 import { PostService } from "./PostService";
 import { UserService } from "./UserService";
-import { ExcelFileService } from "./ExcelFileService";
+import { EmpSalaryService } from "./EmpSalaryService";
 
-export { PostService, UserService, ExcelFileService };
+export { PostService, UserService, EmpSalaryService };

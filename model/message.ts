@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import { Document } from "mongoose";
+import { Document, Schema, model } from "mongoose";
 import { UserModel } from "./user";
 
 export interface MessageModel extends Document {
@@ -9,11 +8,11 @@ export interface MessageModel extends Document {
   receiverId: UserModel["_id"];
 }
 
-const messageSchema = new mongoose.Schema(
+const messageSchema = new Schema(
   {
-    senderId: { type: mongoose.Schema.Types.ObjectId, index: true },
+    senderId: { type: Schema.Types.ObjectId, index: true },
     message: String,
-    receiverId: { type: mongoose.Schema.Types.ObjectId, index: true },
+    receiverId: { type: Schema.Types.ObjectId, index: true },
     roomId: String,
   },
   {
@@ -21,5 +20,5 @@ const messageSchema = new mongoose.Schema(
   }
 );
 
-let Message = mongoose.model<MessageModel>("Message", messageSchema);
+let Message = model<MessageModel>("Message", messageSchema);
 export default Message;

@@ -2,7 +2,7 @@ import Comment, { CommentModel } from "./comment";
 import Post, { PostModel } from "./post";
 import User, { UserModel } from "./user";
 import Message, { MessageModel } from "./message";
-import ExcelData, { ExcelDataModel } from "./excelData";
+import EmpSalary, { EmpSalaryModel } from "./empSalary";
 
 export {
   User,
@@ -13,6 +13,6 @@ export {
   CommentModel,
   Post,
   PostModel,
-  ExcelData,
-  ExcelDataModel,
+  EmpSalary,
+  EmpSalaryModel,
 };

@@ -1,21 +1,19 @@
 import { Inject } from "typescript-ioc";
 
-import { ExcelDataModel } from "../model/index";
-import { ExcelFileService } from "../services/index";
+import { EmpSalaryModel } from "../model/index";
+import { EmpSalaryService } from "../services/index";
 import { FileParam, Path, POST } from "typescript-rest";
 
 @Path("/excelData")
-export class ExcelFileController {
+export class EmpSalaryController {
   //inject
   @Inject
-  private injectedService: ExcelFileService;
-
+  private injectedService: EmpSalaryService;
   // add new excel sheet data in mongodb
-
   @POST
   public addNewExcelSheet(
     @FileParam("file") file: Express.Multer.File
-  ): Promise<ExcelDataModel> {
+  ): Promise<Array<EmpSalaryModel>> {
     return this.injectedService.addNewExcelSheet(file);
   }
 }

@@ -1,5 +1,5 @@
 import { UserClassController } from "./UserClassController";
 import { PostClassController } from "./PostClassController";
-import { ExcelFileController } from "./ExcelFileController";
+import { EmpSalaryController } from "./EmpSalaryController";
 
-export default [UserClassController, PostClassController, ExcelFileController];
+export default [UserClassController, PostClassController, EmpSalaryController];
