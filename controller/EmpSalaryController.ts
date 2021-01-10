@@ -4,7 +4,7 @@ import { EmpSalaryModel } from "../model/index";
 import { EmpSalaryService } from "../services/index";
 import { FileParam, Path, POST } from "typescript-rest";
 
-@Path("/excelData")
+@Path("/empsal")
 export class EmpSalaryController {
   @Inject
   private injectedService: EmpSalaryService;
@@ -13,7 +13,7 @@ export class EmpSalaryController {
   @POST
   public addNewExcelSheet(
     @FileParam("file") file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel>> {
+  ): Promise<Array<EmpSalaryModel> | string> {
     return this.injectedService.addNewExcelSheet(file);
   }
 }

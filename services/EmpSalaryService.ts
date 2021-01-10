@@ -4,14 +4,14 @@ import { helperFunctionClass } from "../helperFunction/helperFunctionClass";
 
 import { EmpSalary, EmpSalaryModel } from "../model/index";
 import {
-  fileExtensionValidatorClass,
-  fileContentValidatorClass,
+  excelFileExtensionValidatorClass,
+  excelFileContentValidatorClass,
 } from "../validator/index";
 
 export abstract class EmpSalaryService {
   public abstract addNewExcelSheet(
     file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel>>;
+  ): Promise<Array<EmpSalaryModel> | string>;
 }
 
 //implement excelfileservice
@@ -19,21 +19,29 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
   //add excelsheet data in mongodb
   public async addNewExcelSheet(
     file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel>> {
+  ): Promise<Array<EmpSalaryModel> | string> {
     try {
+      let fileExt: string = file.originalname.split(".")[1];
+
       //check for excel file extension
-      if (fileExtensionValidatorClass.fileExtensionValidator(file)) {
+      if (
+        !excelFileExtensionValidatorClass.isValidExcelFileExtension(fileExt)
+      ) {
+        return "Please provide valid excel file";
+      } else {
         //conversion of emp salary data to json
         const result: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
           file
         );
 
         //file content/type validator
-        let services: Joi.ArraySchema = fileContentValidatorClass.fileContentValidator();
-        let test: Joi.ValidationResult = services.validate(result);
+        let test: Joi.ValidationResult = excelFileContentValidatorClass.excelFileContentValidator(
+          result
+        );
         if (test.error) {
-          console.log("file content validation error");
-          throw new Error();
+          //console.log("file content is not valid");
+          //throw new Error();
+          return "File content is not valid";
         }
 
         //store emp salary data from excel sheet to mongodb
