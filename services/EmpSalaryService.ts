@@ -19,7 +19,7 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
   public addNewExcelSheet(file: Express.Multer.File): Object {
     try {
       let fileExt: string = file.originalname.split(".")[1];
-      let validExcelExtension: string[] = ["xlsm", "xlsx"];
+      let validExcelExtension: string[] = ["xlsx"];
 
       //check for excel file extension
       if (
