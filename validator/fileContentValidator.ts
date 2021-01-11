@@ -2,9 +2,9 @@ import Joi from "joi";
 
 import { EmpSalaryModel } from "../model/index";
 
-export class excelFileContentValidatorClass {
+export class fileContentValidatorClass {
   //fuction for validating file content
-  public static excelFileContentValidator(
+  public static isValidExcelFileContent(
     result: Array<EmpSalaryModel>
   ): Joi.ValidationResult {
     let service: Joi.ObjectSchema<any> = Joi.object().keys({

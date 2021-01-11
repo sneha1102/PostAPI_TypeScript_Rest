@@ -4,8 +4,8 @@ import { Container } from "typescript-ioc";
 import { helperFunctionClass } from "../helperFunction/helperFunctionClass";
 import { EmpSalary, EmpSalaryModel } from "../model/index";
 import {
-  excelFileExtensionValidatorClass,
-  excelFileContentValidatorClass,
+  fileExtensionValidatorClass,
+  fileContentValidatorClass,
   isFileEmptyClass,
 } from "../validator/index";
 
@@ -19,10 +19,14 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
   public addNewExcelSheet(file: Express.Multer.File): Object {
     try {
       let fileExt: string = file.originalname.split(".")[1];
+      let validExcelExtension: string[] = ["xlsm", "xlsx"];
 
       //check for excel file extension
       if (
-        !excelFileExtensionValidatorClass.isValidExcelFileExtension(fileExt)
+        !fileExtensionValidatorClass.isValidFileExtension(
+          fileExt,
+          validExcelExtension
+        )
       ) {
         return { message: "Please provide valid excel file" };
       }
@@ -39,7 +43,7 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
         );
 
         //file content/type validator
-        let test: Joi.ValidationResult = excelFileContentValidatorClass.excelFileContentValidator(
+        let test: Joi.ValidationResult = fileContentValidatorClass.isValidExcelFileContent(
           excelResult
         );
         if (test.error) {
@@ -52,7 +56,6 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
         );
         return {
           message: "Employee salary info inserted successfully",
-          EmployeeSalaryInfo: result,
         };
       }
     } catch (err) {

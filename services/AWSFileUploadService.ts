@@ -1,7 +1,7 @@
 import { Container } from "typescript-ioc";
 import S3 from "aws-sdk/clients/s3";
 
-import { imageFileExtensionValidatorClass } from "../validator/index";
+import { fileExtensionValidatorClass } from "../validator/index";
 import { isFileEmptyClass } from "../validator/index";
 
 export abstract class AWSFileUploadService {
@@ -11,10 +11,14 @@ export abstract class AWSFileUploadService {
 export class AWSFileUploadServiceImpl implements AWSFileUploadService {
   public fileUploadToAwsS3(file: Express.Multer.File): Object {
     const imageFileExt: string = file.originalname.split(".")[1];
+    let validImageExtension: string[] = ["jpg", "jpeg", "png"];
 
     //check image file extension
     if (
-      !imageFileExtensionValidatorClass.isValidImageFileExtension(imageFileExt)
+      !fileExtensionValidatorClass.isValidFileExtension(
+        imageFileExt,
+        validImageExtension
+      )
     ) {
       return { message: "Please provide valid image file format" };
     }
