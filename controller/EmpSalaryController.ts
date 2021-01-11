@@ -9,11 +9,11 @@ export class EmpSalaryController {
   @Inject
   private injectedService: EmpSalaryService;
 
-  // add new excel sheet data in mongodb
+  // add new excel sheet with employee salary info in mongodb
   @POST
   public addNewExcelSheet(
     @FileParam("file") file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel> | string> {
+  ): Object {
     return this.injectedService.addNewExcelSheet(file);
   }
 }

@@ -5,22 +5,23 @@ import { imageFileExtensionValidatorClass } from "../validator/index";
 import { isFileEmptyClass } from "../validator/index";
 
 export abstract class AWSFileUploadService {
-  public abstract fileUploadToAwsS3(image: Express.Multer.File): String;
+  public abstract fileUploadToAwsS3(image: Express.Multer.File): Object;
 }
 
 export class AWSFileUploadServiceImpl implements AWSFileUploadService {
-  public fileUploadToAwsS3(file: Express.Multer.File): String {
-    //check image file extension
+  public fileUploadToAwsS3(file: Express.Multer.File): Object {
     const imageFileExt: string = file.originalname.split(".")[1];
+
+    //check image file extension
     if (
       !imageFileExtensionValidatorClass.isValidImageFileExtension(imageFileExt)
     ) {
-      return "Please provide valid image file format";
+      return { message: "Please provide valid image file format" };
     }
 
     //check if file is empty
     if (!isFileEmptyClass.isFileEmpty(file)) {
-      return "Please upload valid image file";
+      return { message: "Please upload valid image file" };
     }
 
     //s3 bucket config details
@@ -33,12 +34,13 @@ export class AWSFileUploadServiceImpl implements AWSFileUploadService {
       Key: file.originalname,
       Body: file.buffer,
     };
+
+    //upload file to s3  bucket
     try {
-      //upload file to s3  bucket
       s3.upload(bucket);
-      return "File Uploaded to AWS Bucket Successfully";
+      return { message: "File Uploaded to AWS Bucket Successfully" };
     } catch (error) {
-      return error;
+      return { Error: error };
     }
   }
 }

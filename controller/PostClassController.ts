@@ -12,7 +12,7 @@ export class PostClassController {
 
   //to add new post   "/posts"
   @POST
-  public addNewPost(post: PostModel): Promise<PostModel> {
+  public addNewPost(post: PostModel): Object {
     return this.injectedService.addNewPost(post);
   }
 
@@ -22,7 +22,7 @@ export class PostClassController {
   public async updatePost(
     @PathParam("postId") postId: string,
     post: PostModel
-  ): Promise<PostModel> {
+  ): Promise<Object> {
     return this.injectedService.updatePost(postId, post);
   }
 
@@ -31,20 +31,20 @@ export class PostClassController {
   @Path("/:postId")
   public async deletePost(
     @PathParam("postId") postId: string
-  ): Promise<PostModel> {
+  ): Promise<Object> {
     return this.injectedService.deletePost(postId);
   }
 
   //to get post by id "/posts/:id"
   @GET
   @Path(":id")
-  public async getPostById(@PathParam("id") id: string): Promise<PostModel> {
+  public async getPostById(@PathParam("id") id: string): Promise<Object> {
     return this.injectedService.getPostById(id);
   }
 
   //to get all post "/posts"
   @GET
-  public async getAllPost(): Promise<Array<PostModel>> {
+  public async getAllPost(): Promise<Object> {
     return this.injectedService.getAllPost();
   }
 
@@ -54,7 +54,7 @@ export class PostClassController {
   public async likePost(
     @PathParam("postId") postId: string,
     post: PostModel
-  ): Promise<PostModel> {
+  ): Promise<Object> {
     return this.injectedService.likePost(postId, post);
   }
 
@@ -64,7 +64,7 @@ export class PostClassController {
   public async addNewComment(
     @PathParam("postId") postId: ObjectId,
     comment: CommentModel
-  ): Promise<CommentModel> {
+  ): Promise<Object> {
     return this.injectedService.addNewComment(postId, comment);
   }
 
@@ -73,7 +73,7 @@ export class PostClassController {
   @Path("/:postId/comments")
   public async getCommentByPostId(
     @PathParam("postId") postId: ObjectId
-  ): Promise<Array<CommentModel>> {
+  ): Promise<Object> {
     return this.injectedService.getCommentByPostId(postId);
   }
 }

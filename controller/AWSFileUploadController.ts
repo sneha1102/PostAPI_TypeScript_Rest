@@ -13,7 +13,7 @@ export class AWSFileUploadController {
   @Path("posts")
   public fileUploadToAwsS3(
     @FileParam("file") imageFile: Express.Multer.File
-  ): String {
+  ): Object {
     return this.injectedService.fileUploadToAwsS3(imageFile);
   }
 }

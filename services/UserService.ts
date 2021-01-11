@@ -4,65 +4,67 @@ import mongoose from "mongoose";
 import { User, UserModel, Message, MessageModel } from "../model/index";
 
 export abstract class UserService {
-  public abstract addNewUser(user: UserModel): Promise<UserModel>;
-  public abstract getUserById(id: string): Promise<UserModel>;
-  public abstract getAllUser(): Promise<Array<UserModel>>;
-  public abstract sendMessage(
-    senderId: string,
-    message: MessageModel
-  ): Promise<MessageModel>;
-  public abstract getAllMessageByTime(
-    userId: string
-  ): Promise<Array<MessageModel>>;
+  public abstract addNewUser(user: UserModel): Object;
+  public abstract getUserById(id: string): Promise<Object>;
+  public abstract getAllUser(): Promise<Object>;
+  public abstract sendMessage(senderId: string, message: MessageModel): Object;
+  public abstract getAllMessageByTime(userId: string): Promise<Object>;
 }
 
 //implementation of interface
 export class UserServiceImpl implements UserService {
   //to add a new user
-  public addNewUser(user: UserModel): Promise<UserModel> {
+  public addNewUser(user: UserModel): Object {
     try {
-      return User.create(user);
+      User.create(user);
+      return { message: "User created successfully" };
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 
   //to get user by id
-  public async getUserById(id: string): Promise<UserModel> {
+  public async getUserById(id: string): Promise<Object> {
     try {
-      return await User.findById(id).exec();
+      let result: UserModel = await User.findById(id);
+      if (!result) {
+        return { message: `User with id:${id} not found` };
+      } else {
+        return { message: "User found", User: result };
+      }
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 
   //to get all users
-  public async getAllUser(): Promise<Array<UserModel>> {
+  public async getAllUser(): Promise<Object> {
     try {
-      return await User.find({}).exec();
+      let result: UserModel[] = await User.find({});
+      if (result.length <= 0) {
+        return { message: `Users not found` };
+      } else {
+        return { message: "Users found", User: result };
+      }
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 
   //to send message
-  public async sendMessage(
-    senderId: string,
-    message: MessageModel
-  ): Promise<MessageModel> {
+  public sendMessage(senderId: string, message: MessageModel): Object {
     try {
       message.roomId = [senderId, message.receiverId].sort().join("");
       message.senderId = senderId;
-      return Message.create(message);
+      Message.create(message);
+      return { message: "Message sent" };
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 
   //to get all message by time
-  public async getAllMessageByTime(
-    userId: string
-  ): Promise<Array<MessageModel>> {
+  public async getAllMessageByTime(userId: string): Promise<Object> {
     try {
       const result = await Message.aggregate([
         {
@@ -116,9 +118,15 @@ export class UserServiceImpl implements UserService {
 
         { $sort: { createdAt: -1 } },
       ]);
-      return result;
+
+      //if resultant message array is empty
+      if (result.length <= 0) {
+        return { message: `Messages not found with id:${userId}` };
+      } else {
+        return { message: "Messages found", Messages: result };
+      }
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 }

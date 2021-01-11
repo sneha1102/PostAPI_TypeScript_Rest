@@ -1,25 +1,22 @@
 import Joi from "joi";
 import { Container } from "typescript-ioc";
-import { helperFunctionClass } from "../helperFunction/helperFunctionClass";
 
+import { helperFunctionClass } from "../helperFunction/helperFunctionClass";
 import { EmpSalary, EmpSalaryModel } from "../model/index";
 import {
   excelFileExtensionValidatorClass,
   excelFileContentValidatorClass,
+  isFileEmptyClass,
 } from "../validator/index";
 
 export abstract class EmpSalaryService {
-  public abstract addNewExcelSheet(
-    file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel> | string>;
+  public abstract addNewExcelSheet(file: Express.Multer.File): Object;
 }
 
 //implement excelfileservice
 export class EmpSalaryServiceImpl implements EmpSalaryService {
   //add excelsheet data in mongodb
-  public async addNewExcelSheet(
-    file: Express.Multer.File
-  ): Promise<Array<EmpSalaryModel> | string> {
+  public addNewExcelSheet(file: Express.Multer.File): Object {
     try {
       let fileExt: string = file.originalname.split(".")[1];
 
@@ -27,28 +24,39 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
       if (
         !excelFileExtensionValidatorClass.isValidExcelFileExtension(fileExt)
       ) {
-        return "Please provide valid excel file";
-      } else {
-        //conversion of emp salary data to json
-        const result: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
+        return { message: "Please provide valid excel file" };
+      }
+
+      //check if file is empty
+      else if (!isFileEmptyClass.isFileEmpty(file)) {
+        return { message: "Please upload valid image file" };
+      }
+
+      //conversion of emp salary data to json
+      else {
+        const excelResult: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
           file
         );
 
         //file content/type validator
         let test: Joi.ValidationResult = excelFileContentValidatorClass.excelFileContentValidator(
-          result
+          excelResult
         );
         if (test.error) {
-          //console.log("file content is not valid");
-          //throw new Error();
-          return "File content is not valid";
+          return { message: "File content is not valid" };
         }
 
         //store emp salary data from excel sheet to mongodb
-        return EmpSalary.create(result);
+        let result: Promise<Array<EmpSalaryModel>> = EmpSalary.insertMany(
+          excelResult
+        );
+        return {
+          message: "Employee salary info inserted successfully",
+          EmployeeSalaryInfo: result,
+        };
       }
     } catch (err) {
-      return err;
+      return { Error: err };
     }
   }
 }
