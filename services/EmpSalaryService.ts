@@ -18,7 +18,8 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
   //add excelsheet data in mongodb
   public addNewExcelSheet(file: Express.Multer.File): Object {
     try {
-      let fileExt: string = file.originalname.split(".")[1];
+      let fileName: string[] = file.originalname.split(".");
+      let fileExt: string = fileName[fileName.length - 1];
       let validExcelExtension: string[] = ["xlsx"];
 
       //check for excel file extension
@@ -32,32 +33,28 @@ export class EmpSalaryServiceImpl implements EmpSalaryService {
       }
 
       //check if file is empty
-      else if (!isFileEmptyClass.isFileEmpty(file)) {
+      if (!isFileEmptyClass.isFileEmpty(file)) {
         return { message: "Please upload valid image file" };
       }
 
       //conversion of emp salary data to json
-      else {
-        const excelResult: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
-          file
-        );
+      const excelResult: Array<EmpSalaryModel> = helperFunctionClass.ExcelToJson(
+        file
+      );
 
-        //file content/type validator
-        let test: Joi.ValidationResult = fileContentValidatorClass.isValidExcelFileContent(
-          excelResult
-        );
-        if (test.error) {
-          return { message: "File content is not valid" };
-        }
-
-        //store emp salary data from excel sheet to mongodb
-        let result: Promise<Array<EmpSalaryModel>> = EmpSalary.insertMany(
-          excelResult
-        );
-        return {
-          message: "Employee salary info inserted successfully",
-        };
+      //file content validator
+      let test: Joi.ValidationResult = fileContentValidatorClass.isValidExcelFileContent(
+        excelResult
+      );
+      if (test.error) {
+        return { message: "File content is not valid" };
       }
+
+      //store emp salary data from excel sheet to mongodb
+      EmpSalary.insertMany(excelResult);
+      return {
+        message: "Employee salary info inserted successfully",
+      };
     } catch (err) {
       return { Error: err };
     }
