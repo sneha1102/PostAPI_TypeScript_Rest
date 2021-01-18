@@ -1,145 +1,66 @@
-import { ObjectId } from "mongoose";
-import { Container } from "typescript-ioc";
+import {ObjectId} from 'mongoose';
+import {CommentModel, PostModel} from '../model';
 
-import { Post, Comment, PostModel, CommentModel } from "../model/index";
-
-export abstract class PostService {
-  public abstract addNewPost(user: PostModel): Object;
-  public abstract updatePost(postId: string, post: PostModel): Promise<Object>;
-  public abstract deletePost(postId: string): Promise<Object>;
-  public abstract getPostById(id: string): Promise<Object>;
-  public abstract getAllPost(): Promise<Object>;
-  public abstract likePost(postId: string, post: PostModel): Promise<Object>;
+export abstract class PostService
+{
+  /**
+   * Create new post
+   * @param post PostModel data
+   * @return post PostModel
+   */
+  public abstract addNewPost (user: PostModel): Promise<PostModel>;
+  
+     /**
+     * Update a post
+     * @param postId post identity
+     * @param post PostModel
+     * @return post PostModel
+     */
+  public abstract updatePost (postId: string, post: PostModel): Promise<PostModel>;
+  
+   /**
+     * delete a post
+     * @param postId post identity
+     * @return post PostModel
+     */
+  public abstract deletePost (postId: string): Promise<PostModel>;
+  
+   /**
+     * Returns a post
+     * @param id post identity
+     * @return post PostModel
+     */
+  public abstract getPostById (id: string): Promise<PostModel>;
+  
+  /**
+     * Returns array of posts
+     * @return array of post PostModel[]
+     */
+  public abstract getAllPost (): Promise<PostModel[]>;
+  
+  /**
+     * Like a post
+     * @param postId post identity
+     * @param post PostModel
+     * @return post  PostModel
+     */
+  public abstract likePost (postId: string, post: PostModel): Promise< PostModel>;
+  
+  /**
+   * Create new Comment
+   * @param postId post identity
+   * @param comment CommentModel data
+   * @return comment CommentModel
+   */
   public abstract addNewComment(
     postId: ObjectId,
     comment: CommentModel
-  ): Object;
-  public abstract getCommentByPostId(postId: ObjectId): Promise<Object>;
+  ): Promise<CommentModel>;
+
+  /**
+     * Returns array of comment
+     * @param postId post identity
+     * @return array of comment CommentModel[]
+     */
+  public abstract getCommentByPostId(postId: ObjectId): Promise<CommentModel[]>;
 }
-
-//implementation of interface
-export class PostServiceImpl implements PostService {
-  //to add new post
-  public addNewPost(post: PostModel): Object {
-    try {
-      Post.create(post);
-      return { message: "Post created successfully" };
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to update a post
-  public async updatePost(postId: string, post: PostModel): Promise<Object> {
-    try {
-      let result: PostModel = await Post.findByIdAndUpdate(postId, post, {
-        new: true,
-      });
-      return { message: "Post updated successfully", Post: result };
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to delete a post
-  public async deletePost(postId: string): Promise<Object> {
-    try {
-      let result: PostModel = await Post.findByIdAndDelete(postId);
-      return { message: "Post deleted successfully", Post: result };
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to get post by id
-  public async getPostById(id: string): Promise<Object> {
-    try {
-      let result: PostModel = await Post.findById(id);
-      if (!result) {
-        return { message: `Post with id:${id} Not Found` };
-      } else {
-        return { message: "Post found", Post: result };
-      }
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to get all post
-  public async getAllPost(): Promise<Object> {
-    try {
-      let result: PostModel[] = await Post.find({});
-      if (result.length <= 0) {
-        return { message: "Posts Not Found" };
-      } else {
-        return { message: "Posts found", Post: result };
-      }
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to like a post
-  public async likePost(postId: string, post: PostModel): Promise<Object> {
-    try {
-      let result: PostModel;
-      let userId: ObjectId = post.postedBy;
-      result = await Post.findByIdAndUpdate(
-        postId,
-        {
-          $inc: { likes: 1 },
-          $push: {
-            likeDetails: {
-              $each: [
-                {
-                  likedBy: userId,
-                },
-              ],
-              $position: 0,
-            },
-          },
-        },
-        { new: true }
-      );
-
-      if (!result) {
-        return { message: "Post Not Found" };
-      } else {
-        return {
-          message: `Post with id:${postId} is liked by a user with id:${userId}`,
-          Post: result,
-        };
-      }
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to add a comment to a post
-  public addNewComment(postId: ObjectId, comment: CommentModel): Object {
-    try {
-      comment.postId = postId;
-      Comment.create(comment);
-      return { message: "Comment added Successfully" };
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-
-  //to get all comment of particular post
-  public async getCommentByPostId(postId: ObjectId): Promise<Object> {
-    try {
-      let result: CommentModel[] = await Comment.find({ postId: postId })
-        .populate("commentedBy")
-        .populate("postId");
-      if (result.length <= 0) {
-        return { message: `THere is no comment in Post with id:${postId}` };
-      } else {
-        return { message: "Comment found", Comment: result };
-      }
-    } catch (err) {
-      return { Error: err };
-    }
-  }
-}
-Container.bind(PostService).to(PostServiceImpl);

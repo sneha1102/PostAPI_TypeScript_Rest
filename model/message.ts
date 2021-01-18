@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, Model } from "mongoose";
 import { UserModel } from "./user";
 
 export interface MessageModel extends Document {
@@ -8,6 +8,7 @@ export interface MessageModel extends Document {
   receiverId: UserModel["_id"];
 }
 
+//Message Schema 
 const messageSchema: Schema = new Schema(
   {
     senderId: { type: Schema.Types.ObjectId, index: true },
@@ -20,5 +21,5 @@ const messageSchema: Schema = new Schema(
   }
 );
 
-let Message = model<MessageModel>("Message", messageSchema);
-export default Message;
+const Message : Model<MessageModel> = model<MessageModel>("Message", messageSchema);
+export {Message};

@@ -1,6 +1,6 @@
-import { PostService } from "./PostService";
-import { UserService } from "./UserService";
-import { EmpSalaryService } from "./EmpSalaryService";
-import { AWSFileUploadService } from "./AWSFileUploadService";
+export * from "./PostService";
+export * from "./UserService";
+export * from "./EmpSalaryService";
+export * from "./AWSFileUploadService";
+export * from "./impl";
 
-export { PostService, UserService, EmpSalaryService, AWSFileUploadService };

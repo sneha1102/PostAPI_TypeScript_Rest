@@ -1,7 +1,7 @@
 import { Inject } from "typescript-ioc";
 import { FileParam, Path, POST } from "typescript-rest";
 
-import { AWSFileUploadService } from "../services/index";
+import { AWSFileUploadService } from "../services";
 
 @Path("/aws")
 export class AWSFileUploadController {
@@ -11,9 +11,9 @@ export class AWSFileUploadController {
   //upload file to aws s3
   @POST
   @Path("posts")
-  public fileUploadToAwsS3(
+  public async fileUploadToAwsS3(
     @FileParam("file") imageFile: Express.Multer.File
-  ): Object {
+  ): Promise<{message:string}>{
     return this.injectedService.fileUploadToAwsS3(imageFile);
   }
 }

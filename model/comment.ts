@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, Model } from "mongoose";
 
 export interface CommentModel extends Document {
   postId: Schema.Types.ObjectId;
@@ -6,6 +6,7 @@ export interface CommentModel extends Document {
   commentedBy: Schema.Types.ObjectId;
 }
 
+//Comment Schema
 const commentSchema: Schema = new Schema(
   {
     postId: { type: Schema.Types.ObjectId, ref: "Post" },
@@ -17,4 +18,5 @@ const commentSchema: Schema = new Schema(
   }
 );
 
-export default model<CommentModel>("Comment", commentSchema);
+const Comment : Model<CommentModel> = model<CommentModel>("Comment", commentSchema);
+export {Comment};

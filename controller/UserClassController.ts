@@ -1,8 +1,8 @@
 import { GET, Path, PathParam, POST } from "typescript-rest";
 import { Inject } from "typescript-ioc";
 
-import { UserModel, MessageModel } from "../model/index";
-import { UserService } from "../services/index";
+import { UserModel, MessageModel } from "../model";
+import { UserService } from "../services";
 
 @Path("/users")
 export class UserClassController {
@@ -11,30 +11,30 @@ export class UserClassController {
 
   //to add new user "/users"
   @POST
-  public addNewUser(user: UserModel): Object {
+  public async addNewUser (user: UserModel): Promise<UserModel> {
     return this.injectedService.addNewUser(user);
   }
 
   //to get user by id "/users/:id"
   @GET
   @Path(":id")
-  public async getUserById(@PathParam("id") id: string): Promise<Object> {
+  public async getUserById(@PathParam("id") id: string): Promise<UserModel>{
     return this.injectedService.getUserById(id);
   }
 
   //to get all users "/users"
   @GET
-  public async getAllUser(): Promise<Object> {
+  public async getAllUser(): Promise<UserModel[]> {
     return this.injectedService.getAllUser();
   }
 
   //to send message "/users/:senderId/messages"
   @POST
   @Path(":senderId")
-  public sendMessage(
+  public async sendMessage(
     @PathParam("senderId") senderId: string,
     message: MessageModel
-  ): Object {
+  ): Promise<MessageModel> {
     return this.injectedService.sendMessage(senderId, message);
   }
 
@@ -43,7 +43,7 @@ export class UserClassController {
   @Path(":userId/messages")
   public async getAllMessageByTime(
     @PathParam("userId") userId: string
-  ): Promise<Object> {
+  ): Promise<MessageModel[]> {
     return this.injectedService.getAllMessageByTime(userId);
   }
 }

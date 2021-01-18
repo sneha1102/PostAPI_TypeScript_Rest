@@ -1,8 +1,8 @@
 import { Inject } from "typescript-ioc";
+import {FileParam, Path, POST} from "typescript-rest";
 
-import { EmpSalaryModel } from "../model/index";
-import { EmpSalaryService } from "../services/index";
-import { FileParam, Path, POST } from "typescript-rest";
+import { EmpSalaryService } from "../services";
+
 
 @Path("/empsal")
 export class EmpSalaryController {
@@ -11,9 +11,9 @@ export class EmpSalaryController {
 
   // add new excel sheet with employee salary info in mongodb
   @POST
-  public addNewExcelSheet(
+  public async addNewExcelSheet(
     @FileParam("file") file: Express.Multer.File
-  ): Object {
-    return this.injectedService.addNewExcelSheet(file);
+  ): Promise<{message:string}> {
+    return this.injectedService.addNewEmpSalaryInfo(file);
   }
 }

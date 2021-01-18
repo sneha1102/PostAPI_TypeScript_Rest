@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model,Model } from "mongoose";
 
 export interface EmpSalaryModel extends Document {
   Name: String;
@@ -6,6 +6,7 @@ export interface EmpSalaryModel extends Document {
   Salary: Number;
 }
 
+//Employee Salary Schema
 const empSalarySchema: Schema = new Schema(
   {
     Name: String,
@@ -24,5 +25,5 @@ const empSalarySchema: Schema = new Schema(
   { timestamps: true }
 );
 
-let EmpSalary = model<EmpSalaryModel>("EmpSalary", empSalarySchema);
-export default EmpSalary;
+const EmpSalary : Model<EmpSalaryModel>= model<EmpSalaryModel>("EmpSalary", empSalarySchema);
+export {EmpSalary};

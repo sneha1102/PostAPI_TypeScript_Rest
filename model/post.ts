@@ -1,4 +1,4 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, Model } from "mongoose";
 
 import { UserModel } from "./user";
 
@@ -15,6 +15,7 @@ export interface PostModel extends Document {
   ];
 }
 
+//Post chema
 const postSchema: Schema = new Schema(
   {
     postName: String,
@@ -33,4 +34,5 @@ const postSchema: Schema = new Schema(
   }
 );
 
-export default model<PostModel>("Post", postSchema);
+const Post : Model<PostModel> = model<PostModel>("Post", postSchema);
+export {Post};

@@ -1,4 +1,5 @@
-export class fileExtensionValidatorClass {
+export class fileExtensionValidatorClass
+{
   //function to check file extension
   public static isValidFileExtension(
     fileExt: string,

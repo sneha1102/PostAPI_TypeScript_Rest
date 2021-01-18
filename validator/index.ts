@@ -1,9 +1,5 @@
-import { fileExtensionValidatorClass } from "./fileExtensionValidator";
-import { fileContentValidatorClass } from "./fileContentValidator";
-import { isFileEmptyClass } from "./isFileEmpty";
+export * from "./fileExtensionValidator";
+export * from "./fileContentValidator";
+export * from "./isFileEmpty";
 
-export {
-  fileExtensionValidatorClass,
-  fileContentValidatorClass,
-  isFileEmptyClass,
-};
+
